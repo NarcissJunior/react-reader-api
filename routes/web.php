@@ -17,5 +17,9 @@ $router->get('/', function () use ($router) {
 
 //Criando um grupo de rotas onde todas possuem o prefixo 'api'
 $router->group(['prefix' => '/api'], function () use ($router) {
-    $router->get('/characters', 'CharactersController@index');
+    $router->get('characters', 'CharactersController@index');
+    $router->get('characters/{id}', 'CharactersController@show');
+    $router->put('characters/{id}', 'CharactersController@update');
+    $router->delete('characters/{id}', 'CharactersController@destroy');
+    $router->post('characters', 'CharactersController@store');
 });

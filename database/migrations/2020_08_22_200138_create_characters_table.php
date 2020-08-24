@@ -18,7 +18,7 @@ class CreateCharactersTable extends Migration
             $table->string('name');
             $table->string('vocation');
             $table->string('sex');
-            $table->string('level');
+            $table->integer('level');
             $table->string('world');
             $table->string('residence');
             $table->timestamps();
