@@ -9,48 +9,33 @@ class CharactersController
     //Buscar todos os personagens
     public function index()
     {
-        return Character::all();
+        return Character::paginate(2);
     }
 
     //Criar um personagem novo trazendo a resposta da requisição
     public function store(Request $request)
     {
-        return response()
-            ->json(
-                Character::create([
-                    'name' => $request->name,
-                    'vocation' => $request->vocation,
-                    'sex' => $request->sex,
-                    'level' => $request->level,
-                    'world' => $request->world,
-                    'residence' => $request->residence,
+        $character = new Character;
+        $character->fill($request->all());
+        $character->save();
 
-                ]), 201
-            );
+        return response()->json($character, 201);
     }
 
     //Buscar um personagem
     public function show(int $id)
     {
-        $character = Character::find($id);
-        if (is_null($character)) {
-            return response()->json('', 204);
-        }
-        return response()->json($character, 200);
+        return Character::findOrFail($id);
     }
 
     //Atualizar um personagem
     public function update(int $id, Request $request)
     {
-        $character = Character::find($id);
-        if (is_null($character)) {
-            return response()->json(["message" => "Personagem não encontrado!"], 404);
-        }
-
+        $character = Character::findOrFail($id);
         $character->fill($request->all());
         $character->save();
-
-        return $character;
+        
+        return response()->json($character, 200);;
     }
 
     //Exclui um personagem

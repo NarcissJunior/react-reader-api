@@ -18,6 +18,19 @@ class Character extends Model
         'sex',
         'level',
         'world',
-        'residence'
+        'residence',
+        'world_id'
     ];
+
+    //Adicionar a propriedade de links usando o append para facilitar o HATEOAS
+    //HATEOAS - Hypermidia As The Engine Of the Application State
+    protected $appends = ['links'];
+
+    //Accessor dos links
+    public function getLinksAttribute($links): array
+    {
+        return [
+            'self' => '/api/characters/' . $this->id
+        ];
+    }
 }
